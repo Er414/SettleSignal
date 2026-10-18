@@ -389,7 +389,7 @@ export function LandingPage() {
                   <source src={videoCredit.src} type="video/mp4" />
                 </video>
               ) : (
-                <Image src="/images/hero-poster.jpg" alt="Still of a glass ring used when the atmospheric video is paused." width={1672} height={941} />
+                <Image src="/images/hero-poster.svg" alt="Still of a glass ring used when the atmospheric video is paused." width={1672} height={941} />
               )}
               <p>Atmospheric loop · not a transaction</p>
               {!videoOn && !reduced ? <button type="button" className="btn-ghost btn-small cinema-load" onClick={() => setVideoOn(true)}>Load atmospheric loop</button> : null}
