@@ -78,6 +78,7 @@ export function Shell({ settings, children }: { settings: SettingsView; children
           {links.map((link) => (
             <Link key={link.href} href={link.href} onClick={() => setOpen(false)}>{link.label}</Link>
           ))}
+          <form action="/api/access/logout" method="post" className="signout-form signout-mobile"><button type="submit" className="btn-ghost btn-small"><LogOut size={14} /> Sign out</button></form>
         </div>
         <div id="main" className="app-content">{children}</div>
       </div>

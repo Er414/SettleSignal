@@ -37,16 +37,16 @@ export function AccessForm({ configured }: { configured: boolean }) {
   }
 
   return (
-    <section className="panel" aria-labelledby="access-title">
+    <section className="panel access-card" aria-labelledby="access-title">
       <p className="eyebrow"><i /> WORKSPACE ACCESS</p>
       <h2 id="access-title">Sign in</h2>
       <p>Enter the private workspace password to continue.</p>
       {!configured ? (
-        <p className="announce" role="status">
+        <p className="access-locked" role="status">
           Access is disabled until both SETTLESIGNAL_ADMIN_PASSWORD and SETTLESIGNAL_ADMIN_SECRET are configured in this Vercel project environment. Use a password of at least 12 characters and an independent secret of at least 32 characters, then redeploy.
         </p>
       ) : null}
-      <form className="form-grid" onSubmit={submit}>
+      <form className="access-form" onSubmit={submit}>
         <label className="field">
           <span>Workspace password</span>
           <input
@@ -61,7 +61,7 @@ export function AccessForm({ configured }: { configured: boolean }) {
             disabled={!configured || pending}
           />
         </label>
-        {error ? <p className="err" role="alert">{error}</p> : null}
+        {error ? <p className="access-error" role="alert">{error}</p> : null}
         <button className="btn-primary" type="submit" disabled={!configured || pending || password.length < 12}>
           {pending ? "Checking…" : "Open workspace"}
         </button>
