@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">SettleSignal signal ring still</title>
+  <desc id="desc">A bright partial ring and point-to-point signal arc, used as a static alternative to 3D motion.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#111a22"/><stop offset=".6" stop-color="#07090c"/><stop offset="1" stop-color="#0d1710"/></linearGradient>
+    <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f4f1ea"/><stop offset=".35" stop-color="#8ecfff"/><stop offset=".7" stop-color="#d6f25c"/><stop offset="1" stop-color="#8ecfff"/></linearGradient>
+    <radialGradient id="halo"><stop stop-color="#8ecfff" stop-opacity=".23"/><stop offset="1" stop-color="#07090c" stop-opacity="0"/></radialGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="13"/></filter>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <rect width="1600" height="900" fill="url(#halo)"/>
+  <g opacity=".14" stroke="#f4f1ea" stroke-width="1"><path d="M0 150H1600M0 300H1600M0 450H1600M0 600H1600M0 750H1600"/><path d="M200 0V900M400 0V900M600 0V900M800 0V900M1000 0V900M1200 0V900M1400 0V900"/></g>
+  <ellipse cx="800" cy="450" rx="300" ry="200" fill="none" stroke="#8ecfff" stroke-width="52" opacity=".2" filter="url(#glow)"/>
+  <g transform="translate(800 450) rotate(18)">
+    <ellipse rx="260" ry="178" fill="none" stroke="url(#ring)" stroke-width="22"/>
+    <ellipse rx="215" ry="139" fill="none" stroke="#f4f1ea" stroke-opacity=".44" stroke-width="2" stroke-dasharray="5 16"/>
+    <path d="M-350 0C-205 155 -95 -168 30 -10S238 148 365 -6" fill="none" stroke="#d6f25c" stroke-width="3"/>
+    <circle cx="-350" cy="0" r="11" fill="#d6f25c"/><circle cx="30" cy="-10" r="8" fill="#f4f1ea"/><circle cx="365" cy="-6" r="11" fill="#8ecfff"/>
+  </g>
+  <g fill="#f4f1ea" font-family="monospace" letter-spacing="4"><text x="70" y="85" font-size="17">SETTLESIGNAL</text><text x="70" y="832" font-size="14" opacity=".65">STATIC FALLBACK / REDUCED MOTION</text></g>
+</svg>
