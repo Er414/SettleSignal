@@ -51,7 +51,7 @@ export function SceneFrame({
       <div className="scene-kicker">{confirmed ? "Verified signal" : "Settlement in motion"}</div>
       {reduced || !webgl ? (
         <div className="scene-fallback">
-          <img src={variant === "compact" ? "/images/signal-still.jpg" : "/images/hero-poster.jpg"} alt="Glass settlement ring in a dark studio, shown as a still because motion is reduced or WebGL is unavailable." />
+          <img src={variant === "compact" ? "/images/signal-still.svg" : "/images/hero-poster.svg"} alt="Glass settlement ring in a dark studio, shown as a still because motion is reduced or WebGL is unavailable." />
         </div>
       ) : (
         <SettlementScene variant={variant} confirmed={confirmed} active={active && !reduced} />
