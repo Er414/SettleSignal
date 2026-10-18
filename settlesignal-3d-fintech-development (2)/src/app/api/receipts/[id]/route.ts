@@ -1,8 +1,10 @@
 import { loadReceipt } from "@/server/queries";
+import { hasWorkspaceAccess } from "@/server/access";
 
 export const dynamic = "force-dynamic";
 
 export async function GET(_request: Request, context: { params: Promise<{ id: string }> }) {
+  if (!(await hasWorkspaceAccess())) return new Response("Sign in required.\\n", { status: 401 });
   const { id } = await context.params;
   try {
     const { receipt } = await loadReceipt(id);

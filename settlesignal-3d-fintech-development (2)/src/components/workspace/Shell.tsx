@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useState, useTransition, type ReactNode } from "react";
-import { FileText, LayoutDashboard, Menu, MessageSquare, Receipt, RotateCcw, Settings, ShieldCheck, X } from "lucide-react";
+import { FileText, LayoutDashboard, Menu, MessageSquare, Receipt, RotateCcw, Settings, ShieldCheck, X, LogOut } from "lucide-react";
 import { Logo } from "@/components/brand";
 import { Dialog } from "@/components/interactive";
 import type { SettingsView } from "@/lib/types";
@@ -65,6 +65,7 @@ export function Shell({ settings, children }: { settings: SettingsView; children
           </div>
           <div className="header-actions">
             <p className="announce" role="status">{message}</p>
+            <form action="/api/access/logout" method="post" className="signout-form"><button type="submit" className="btn-ghost btn-small"><LogOut size={14} /> Sign out</button></form>
             <button type="button" className="btn-ghost btn-small" onClick={() => setConfirm(true)}>
               <RotateCcw size={14} /> Reset demo
             </button>
@@ -77,6 +78,7 @@ export function Shell({ settings, children }: { settings: SettingsView; children
           {links.map((link) => (
             <Link key={link.href} href={link.href} onClick={() => setOpen(false)}>{link.label}</Link>
           ))}
+          <form action="/api/access/logout" method="post" className="signout-form signout-mobile"><button type="submit" className="btn-ghost btn-small"><LogOut size={14} /> Sign out</button></form>
         </div>
         <div id="main" className="app-content">{children}</div>
       </div>

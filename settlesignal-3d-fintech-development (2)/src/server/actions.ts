@@ -12,6 +12,7 @@ import { demoTransferKey, isUniqueViolation, liveTransferKey } from "@/lib/trans
 import type { ActionResult, FollowStatus, Tone, Workflow } from "@/lib/types";
 import { activeRpcUrl, fetchArcSnapshot } from "./arc-rpc";
 import { ensureWorkspace, resetWorkspace } from "./seed";
+import { hasWorkspaceAccess } from "./access";
 
 function refresh() {
   revalidatePath("/workspace", "layout");
@@ -34,6 +35,7 @@ export async function createInvoice(form: {
   currency: string;
   workflow: Workflow;
 }): Promise<ActionResult> {
+  if (!(await hasWorkspaceAccess())) return { ok: false, error: "Sign in to the SettleSignal workspace to continue." };
   const parsed = validateInvoiceInput(form);
   if (!parsed.ok) return { ok: false, error: "Check the highlighted fields.", fieldErrors: parsed.fieldErrors };
   if (form.workflow !== "draft" && form.workflow !== "open") return { ok: false, error: "Choose draft or open." };
@@ -66,6 +68,7 @@ export async function updateInvoice(id: string, form: {
   notes: string;
   currency: string;
 }): Promise<ActionResult> {
+  if (!(await hasWorkspaceAccess())) return { ok: false, error: "Sign in to the SettleSignal workspace to continue." };
   const parsed = validateInvoiceInput(form);
   if (!parsed.ok) return { ok: false, error: "Check the highlighted fields.", fieldErrors: parsed.fieldErrors };
   try {
@@ -82,6 +85,7 @@ export async function updateInvoice(id: string, form: {
 }
 
 export async function setWorkflow(id: string, workflow: Workflow): Promise<ActionResult> {
+  if (!(await hasWorkspaceAccess())) return { ok: false, error: "Sign in to the SettleSignal workspace to continue." };
   if (workflow !== "draft" && workflow !== "open" && workflow !== "archived" && workflow !== "verification_pending") {
     return { ok: false, error: "That status change is not available." };
   }
@@ -107,6 +111,7 @@ export async function saveFollowUp(input: {
   snoozeUntil?: string;
   responseNote?: string;
 }): Promise<ActionResult> {
+  if (!(await hasWorkspaceAccess())) return { ok: false, error: "Sign in to the SettleSignal workspace to continue." };
   const body = input.body.trim();
   if (input.tone !== "friendly" && input.tone !== "professional" && input.tone !== "firm") {
     return { ok: false, error: "Choose a follow-up tone." };
@@ -179,6 +184,7 @@ export async function saveFollowUp(input: {
 }
 
 export async function applyDemoSettlement(invoiceId: string, fixtureId: string): Promise<ActionResult> {
+  if (!(await hasWorkspaceAccess())) return { ok: false, error: "Sign in to the SettleSignal workspace to continue." };
   const fixture = DEMO_FIXTURES.find((item) => item.id === fixtureId);
   if (!fixture) return { ok: false, error: "Choose a labelled demo fixture." };
   try {
@@ -243,6 +249,7 @@ export async function applyDemoSettlement(invoiceId: string, fixtureId: string):
 }
 
 export async function verifyOnArc(invoiceId: string, hash: string, networkId: string): Promise<ActionResult> {
+  if (!(await hasWorkspaceAccess())) return { ok: false, error: "Sign in to the SettleSignal workspace to continue." };
   const txHash = hash.trim();
   if (!isTxHash(txHash)) return { ok: false, error: "Enter a transaction hash: 0x followed by 64 hex characters." };
   const network = networkById(networkId);
@@ -350,6 +357,7 @@ export async function updateSettings(input: {
   network: string;
   recipientAddress: string;
 }): Promise<ActionResult> {
+  if (!(await hasWorkspaceAccess())) return { ok: false, error: "Sign in to the SettleSignal workspace to continue." };
   const parsed = validateSettingsInput(input);
   if (!parsed.ok) return { ok: false, error: "Check the highlighted fields.", fieldErrors: parsed.fieldErrors };
   try {
@@ -368,6 +376,7 @@ export async function updateSettings(input: {
 }
 
 export async function resetDemo(): Promise<ActionResult> {
+  if (!(await hasWorkspaceAccess())) return { ok: false, error: "Sign in to the SettleSignal workspace to continue." };
   try {
     await resetWorkspace();
     refresh();
@@ -379,6 +388,7 @@ export async function resetDemo(): Promise<ActionResult> {
 }
 
 export async function activeLookupHost(networkId: string): Promise<string> {
+  if (!(await hasWorkspaceAccess())) return "Sign in to the SettleSignal workspace.";
   const network = networkById(networkId);
   try {
     return new URL(activeRpcUrl(network.id)).host;
