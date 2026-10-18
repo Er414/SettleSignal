@@ -19,6 +19,7 @@ import type {
 } from "@/lib/types";
 import { activeRpcUrl } from "./arc-rpc";
 import { ensureWorkspace } from "./seed";
+import { requireWorkspaceAccess } from "./access";
 
 function iso(value: Date | string | null | undefined): string {
   if (!value) return new Date(0).toISOString();
@@ -64,6 +65,7 @@ function asKind(value: string): PaymentKind {
 }
 
 export async function loadWorkspace(): Promise<WorkspaceData> {
+  await requireWorkspaceAccess();
   await ensureWorkspace();
   const [settingsRow] = await db.select().from(workspaceSettings).limit(1);
   if (!settingsRow) throw new Error("Workspace settings missing");
